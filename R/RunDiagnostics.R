@@ -222,7 +222,7 @@ executeDiagnostics <- function(cohortDefinitionSet,
                                tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
                                cohortTable = "cohort",
                                cohortTableNames = CohortGenerator::getCohortTableNames(cohortTable = cohortTable),
-                               vocabularyDatabaseSchema = cdmDatabaseSchema,
+                               vocabularyDatabaseSchema = vocabularyDatabaseSchema,
                                cohortIds = NULL,
                                cdmVersion = 5,
                                runInclusionStatistics = TRUE,
@@ -558,6 +558,7 @@ executeDiagnostics <- function(cohortDefinitionSet,
   if (is.null(connection)) {
     if (!is.null(connectionDetails)) {
       connection <- DatabaseConnector::connect(connectionDetails)
+      dbGetQuery(connection, "ALTER SESSION SET JDBC_QUERY_RESULT_FORMAT='JSON'")
       on.exit(DatabaseConnector::disconnect(connection))
     } else {
       stop("No connection or connectionDetails provided.")
@@ -821,6 +822,7 @@ executeDiagnostics <- function(cohortDefinitionSet,
           tempEmulationSchema = tempEmulationSchema,
           cdmDatabaseSchema = cdmDatabaseSchema,
           cohortDatabaseSchema = cohortDatabaseSchema,
+          vocabularyDatabaseSchema = vocabularyDatabaseSchema,
           cohortTable = cohortTable,
           databaseId = databaseId,
           exportFolder = exportFolder,
@@ -937,21 +939,21 @@ executeDiagnostics <- function(cohortDefinitionSet,
   }
 
   # Store information from the vocabulary on the concepts used -------------------------
-  timeExecution(
-    exportFolder,
-    "exportConceptInformation",
-    parent = "executeDiagnostics",
-    expr = {
-      exportConceptInformation(
-        connection = connection,
-        vocabularyDatabaseSchema = vocabularyDatabaseSchema,
-        tempEmulationSchema = tempEmulationSchema,
-        conceptIdTable = "#concept_ids",
-        incremental = incremental,
-        exportFolder = exportFolder
-      )
-    }
-  )
+  # timeExecution(
+  #   exportFolder,
+  #   "exportConceptInformation",
+  #   parent = "executeDiagnostics",
+  #   expr = {
+  #     exportConceptInformation(
+  #       connection = connection,
+  #       vocabularyDatabaseSchema = vocabularyDatabaseSchema,
+  #       tempEmulationSchema = tempEmulationSchema,
+  #       conceptIdTable = "#concept_ids",
+  #       incremental = incremental,
+  #       exportFolder = exportFolder
+  #     )
+  #   }
+  # )
   # Delete unique concept ID table ---------------------------------
   ParallelLogger::logTrace("Deleting concept ID table")
   timeExecution(

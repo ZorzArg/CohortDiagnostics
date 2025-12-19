@@ -19,7 +19,7 @@ getIncidenceRate <- function(connectionDetails = NULL,
                              cohortDatabaseSchema,
                              cohortTable,
                              cdmDatabaseSchema,
-                             vocabularyDatabaseSchema = cdmDatabaseSchema,
+                             vocabularyDatabaseSchema = vocabularyDatabaseSchema,
                              cdmVersion = 5,
                              tempEmulationSchema = tempEmulationSchema,
                              firstOccurrenceOnly = TRUE,
@@ -32,6 +32,7 @@ getIncidenceRate <- function(connectionDetails = NULL,
 
   if (is.null(connection)) {
     connection <- DatabaseConnector::connect(connectionDetails)
+    dbGetQuery(connection, "ALTER SESSION SET JDBC_QUERY_RESULT_FORMAT='JSON'")
     on.exit(DatabaseConnector::disconnect(connection))
   }
 
@@ -205,6 +206,7 @@ computeIncidenceRates <- function(connection,
                                   tempEmulationSchema,
                                   cdmDatabaseSchema,
                                   cohortDatabaseSchema,
+                                  vocabularyDatabaseSchema,
                                   cohortTable,
                                   databaseId,
                                   exportFolder,
