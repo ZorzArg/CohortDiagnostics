@@ -373,7 +373,7 @@ exportConceptSets <- function(cohortDefinitionSet, exportFolder, minCellCount, d
 runConceptSetDiagnostics <- function(connection,
                                      tempEmulationSchema,
                                      cdmDatabaseSchema,
-                                     vocabularyDatabaseSchema = cdmDatabaseSchema,
+                                     vocabularyDatabaseSchema = vocabularyDatabaseSchema,
                                      databaseId,
                                      cohorts,
                                      runIncludedSourceConcepts,
