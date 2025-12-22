@@ -17,7 +17,7 @@
 .findOrphanConcepts <- function(connectionDetails = NULL,
                                 connection = NULL,
                                 cdmDatabaseSchema,
-                                vocabularyDatabaseSchema = vocabularyDatabaseSchema,
+                                vocabularyDatabaseSchema,
                                 tempEmulationSchema = NULL,
                                 conceptIds = c(),
                                 useCodesetTable = FALSE,
