@@ -40,11 +40,12 @@ getCohortCharacteristics <- function(connectionDetails = NULL,
     cohortIds = cohortIds,
     expr = {
       featureExtractionOutput <-
-        FeatureExtraction::getDbCovariateData(
+        FeatureExtraction::getDbCovariateData_snowflake(
           connection = connection,
           oracleTempSchema = tempEmulationSchema,
           cdmDatabaseSchema = cdmDatabaseSchema,
           cohortDatabaseSchema = cohortDatabaseSchema,
+          vocabularyDatabaseSchema = vocabularyDatabaseSchema,
           cdmVersion = cdmVersion,
           cohortTable = cohortTable,
           cohortIds = cohortIds,
