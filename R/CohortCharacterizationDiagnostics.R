@@ -35,7 +35,7 @@ getCohortCharacteristics <- function(connectionDetails = NULL,
   results <- Andromeda::andromeda()
   timeExecution(
     exportFolder,
-    taskName = "getDbCovariateData",
+    taskName = "getDbCovariateData_snowflake",
     parent = "getCohortCharacteristics",
     cohortIds = cohortIds,
     expr = {
